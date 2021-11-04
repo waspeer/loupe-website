@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-idiomatic-order"
+  ],
+  "overrides": [
+    {
+      "customSyntax": "postcss-html",
+      "files": [
+        "**/*.astro"
+      ]
+    }
+  ],
+  "rules": {
+    "max-nesting-depth": [
+      2,
+      {}
+    ],
+    "order/properties-alphabetical-order": null
+  }
+}

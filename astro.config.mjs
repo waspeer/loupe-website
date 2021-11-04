@@ -5,7 +5,7 @@ const config = {
   buildOptions: {
     site: 'https://thisisloupe.com'
   },
-  renderers: ['@astrojs/renderer-react'],
+  // renderers: ['@astrojs/renderer-react'],
 }
 
 export default config;
