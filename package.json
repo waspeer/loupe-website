@@ -1,0 +1,25 @@
+{
+  "name": "loupe-website",
+  "version": "1.0.0",
+  "description": "Website for the Dutch band Loupe",
+  "main": "index.js",
+  "scripts": {
+    "build": "astro build",
+    "dev": "astro dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waspeer/loupe-website.git"
+  },
+  "author": "Wannes Salomé",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waspeer/loupe-website/issues"
+  },
+  "homepage": "https://github.com/waspeer/loupe-website#readme",
+  "dependencies": {
+    "astro": "^0.21.0-next.1",
+    "modern-css-reset": "^1.4.0",
+    "react-icons": "^4.3.1"
+  }
+}

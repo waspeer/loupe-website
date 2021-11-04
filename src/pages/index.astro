@@ -1,0 +1,57 @@
+---
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
+
+import Layout from '../components/layout-base.astro';
+
+
+const socials = [
+  {
+    name: 'Facebook',
+    href: 'https://www.facebook.com/thisisloupe',
+    Icon: FaFacebook,
+  },
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/thisisloupe/',
+    Icon: FaInstagram,
+  },
+]
+---
+
+<Layout>
+  <main class="content">
+    <header>
+      <h1>
+        <img src="/logo.jpg" alt="Loupe">
+      </h1>
+    </header>
+
+    <nav aria-label="Socials">
+      <ul>
+        {socials.map(({ name, href, Icon }) => (
+          <li>
+            <a href={href} title={name}>
+              <Icon />
+              <span class="visually-hidden">{name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <section class="shows">
+      <article />
+      <article />
+      <article />
+    </section>
+
+    <footer>
+      <strong>General inquiries:</strong>
+      <a href="mailto:info@thisisloupe.com">info@thisisloupe.com</a>
+
+      <strong>Management:</strong>
+      <a href="mailto:joris@attacknrelease.com">joris@attacknrelease.com</a>
+      <a href="mailto:martijn@attacknrelease.com">martijn@attacknrelease.com</a>
+    </footer>
+  </main>
+</Layout>
