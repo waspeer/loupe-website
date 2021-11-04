@@ -19,14 +19,14 @@ const socials = [
 ---
 
 <Layout>
-  <main class="content">
+  <main>
     <header>
       <h1>
         <img src="/logo.jpg" alt="Loupe">
       </h1>
     </header>
 
-    <nav aria-label="Socials">
+    <nav class="socials" aria-label="Socials">
       <ul>
         {socials.map(({ name, href, Icon }) => (
           <li>
@@ -55,3 +55,56 @@ const socials = [
     </footer>
   </main>
 </Layout>
+
+<style lang="scss">
+  main {
+    width: 40vw;
+    width: clamp(30ch, 40vw, 50ch);
+    min-height: 100vh;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .socials {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 2rem;
+      display: flex;
+      justify-content: space-around;
+    }
+  
+    a {
+      display: grid;
+      place-content: center;
+    }
+  }
+
+  .shows {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    article {
+      height: 3rem;
+      background-color: #252525;
+    }
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > * + strong {
+      margin-top: 1rem;
+    }
+  }
+
+</style>

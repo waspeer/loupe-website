@@ -16,10 +16,6 @@ a:not([class]) {
   outline-offset: 0.1rem;
 }
 
-main:focus {
-  outline: none;
-}
-
 [href]:hover {
   text-decoration: none;
 }
@@ -39,58 +35,4 @@ main:focus {
   position: absolute;
   width: 1px;
   white-space: nowrap;
-}
-
-body {
-  display: grid;
-  place-content: center;
-}
-
-
-main {
-  width: 40vw;
-  width: clamp(30ch, 40vw, 50ch);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 2rem;
-  display: flex;
-  justify-content: space-around;
-}
-
-nav a {
-  display: grid;
-  place-content: center;
-}
-
-.shows {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.shows article {
-  height: 3rem;
-  background-color: #252525;
-}
-
-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-footer > * + strong {
-  margin-top: 1rem;
 }
