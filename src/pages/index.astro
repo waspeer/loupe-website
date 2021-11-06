@@ -17,28 +17,16 @@ const socials = [
 ]
 ---
 
-<head>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MusicGroup",
-    "name": "Loupe",
-    "image": [
-      "https://thisisloupe.com/loupe.jpg"
-    ]
-  }
-  </script>
-</head>
-
 <Layout>
-  <main>
+  <main itemscope itemtype="https://schema.org/MusicGroup">
     <header>
-      <h1>
+      <h1 itemprop="name">
         <img 
           src="https://res.cloudinary.com/wannessalome/image/upload/f_auto/v1636058831/loupe/logo.jpg" 
           width="776" 
           height="590"
           alt="Loupe"
+          itemprop="image"
         />
         <span class="visually-hidden">Loupe</span>
       </h1>
@@ -48,7 +36,7 @@ const socials = [
       <ul>
         {socials.map(({ name, href, Icon }) => (
           <li>
-            <a href={href} title={name}>
+            <a href={href} title={name} itemprop="sameAs">
               {renderToString(Icon({ 'aria-hidden': 'true' }))}
               <span class="visually-hidden">{name}</span>
             </a>
@@ -65,7 +53,7 @@ const socials = [
 
     <footer>
       <strong>General inquiries:</strong>
-      <a href="mailto:info@thisisloupe.com">info@thisisloupe.com</a>
+      <a href="mailto:info@thisisloupe.com" itemprop="email">info@thisisloupe.com</a>
 
       <strong>Management:</strong>
       <a href="mailto:joris@attacknrelease.com">joris@attacknrelease.com</a>
