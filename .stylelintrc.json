@@ -3,6 +3,7 @@
     "stylelint-config-sass-guidelines",
     "stylelint-config-idiomatic-order"
   ],
+  "ignoreFiles": "**/*{.d.ts,.ts,.js}",
   "overrides": [
     {
       "customSyntax": "postcss-html",

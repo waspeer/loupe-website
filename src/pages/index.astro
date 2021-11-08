@@ -1,7 +1,11 @@
 ---
-import Layout from '../components/layout-base.astro';
+import { format as formatDate } from 'date-fns';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
 import { renderToString } from 'react-dom/server';
+
+import Layout from '../components/layout-base.astro';
+import Schema from '../components/schema.astro';
+import { abossClient } from '../lib/aboss';
 
 const socials = [
   {
@@ -15,18 +19,27 @@ const socials = [
     Icon: FaInstagram,
   },
 ]
+
+const shows = await abossClient.publicEvents({ from: new Date() })
+  .then((shows) => (
+    // Temporarily filter out old shows manually until I figure out how to use
+    // from search parameter
+    shows.filter(({ start }) => new Date(start).getTime() > Date.now())
+  ));
+
 ---
 
+<Schema />
+
 <Layout>
-  <main itemscope itemtype="https://schema.org/MusicGroup">
+  <main>
     <header>
-      <h1 itemprop="name">
+      <h1>
         <img 
           src="https://res.cloudinary.com/wannessalome/image/upload/f_auto/v1636058831/loupe/logo.jpg" 
           width="776" 
           height="590"
           alt="Loupe"
-          itemprop="image"
         />
         <span class="visually-hidden">Loupe</span>
       </h1>
@@ -36,8 +49,8 @@ const socials = [
       <ul>
         {socials.map(({ name, href, Icon }) => (
           <li>
-            <a href={href} title={name} itemprop="sameAs">
-              {renderToString(Icon({ 'aria-hidden': 'true' }))}
+            <a href={href} title={name}>
+              {renderToString(Icon({ 'aria-hidden': 'true' } as any))}
               <span class="visually-hidden">{name}</span>
             </a>
           </li>
@@ -46,14 +59,29 @@ const socials = [
     </nav>
 
     <section class="shows">
-      <article />
-      <article />
-      <article />
+      {shows.map(({ location, occupancyRate, start, ticketLink, title }) => (
+        <article>
+          <time datetime={start}>{formatDate(new Date(start), 'dd MMM')}</time>
+
+          <div>
+            <h2>{title}</h2>
+            <div class="venue">{location.city}, {location.country}</div>
+
+            {occupancyRate === 100 && (
+              <div class="sold-out">Sold Out</div>
+            )}
+
+            {ticketLink.length > 0 && (
+              <a href={ticketLink}>Get Tickets</a>
+            )}
+          </div>
+        </article>
+      ))}
     </section>
 
     <footer>
       <strong>General inquiries:</strong>
-      <a href="mailto:info@thisisloupe.com" itemprop="email">info@thisisloupe.com</a>
+      <a href="mailto:info@thisisloupe.com">info@thisisloupe.com</a>
 
       <strong>Management:</strong>
       <a href="mailto:joris@attacknrelease.com">joris@attacknrelease.com</a>
@@ -105,8 +133,51 @@ const socials = [
     gap: 1rem;
 
     article {
-      height: 3rem;
-      background-color: #252525;
+      --border-radius: 0.25rem;
+
+      position: relative;
+      display: grid;
+      border-radius: var(--border-radius);
+      gap: 1rem;
+      grid: auto-flow / min-content 1fr;
+
+      > div,
+      time {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        border: 1px solid hsl(0, 0, 50%);
+        border-radius: var(--border-radius);
+      }
+
+      time {
+        text-align: center;
+      }
+
+      h2 {
+        font-size: 1rem;
+      }
+
+      .sold-out {
+        opacity: 0.5;
+        text-decoration: line-through;
+      }
+
+      a:focus {
+        outline: none;
+      }
+
+      &:focus-within {
+        outline: 2px dashed;
+        outline-offset: 0.2rem;
+      }
+
+      a::after {
+        position: absolute;
+        content: '';
+        inset: 0;
+      }
     }
   }
 
