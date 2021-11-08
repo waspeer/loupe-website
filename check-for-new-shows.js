@@ -1,7 +1,10 @@
 //@ts-check
+/* eslint-env node */
+/* eslint-disable @typescript-eslint/no-var-requires */
 
+const upstash = require('@upstash/redis');
+const { default: fetch } = require('node-fetch');
 const hashObject = require('object-hash');
-const fetch = require('node-fetch');
 
 // CHECK FOR NEW SHOWS
 // -------------------
@@ -9,6 +12,10 @@ const fetch = require('node-fetch');
 // Fetches the current shows from the aboss api and compares it with a hash
 // of the previous state. If the object changed the subscribers will be notified.
 // Meant to be run in a cron job to trigger a new build when shows are changed/added/removed.
+
+const ABOSS_URL = process.env.ABOSS_URL;
+const ABOSS_TOKEN = process.env.ABOSS_TOKEN;
+const NETLIFY_HOOK = process.env.NETLIFY_HOOK; // https://api.netlify.com/build_hooks/61893ca60768133362b0dd15
 
 // TYPE DEFINITIONS
 // ----------------
@@ -21,8 +28,7 @@ const fetch = require('node-fetch');
 // -----------
 
 async function triggerBuild() {
-  // TODO
-  console.log('Build triggered');
+  await fetch(NETLIFY_HOOK, { method: 'POST' });
 }
 
 /** @type {Subscriber[]} */
@@ -33,25 +39,34 @@ const subscribers = [triggerBuild];
 
 /** @type {() => Promise<Show[]>} */
 async function fetchShows() {
-  // TODO
-  return [
-    {
-      name: 'show-1',
-      date: new Date('1990-10-22'),
+  return await fetch(ABOSS_URL, {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${ABOSS_TOKEN}`,
     },
-  ];
+  }).then((response) => {
+    return /** @type {Promise<Show[]>} */ (response.json());
+  });
 }
 
 /** @type {() => Promise<string | null>} */
 async function getPreviousHash() {
-  // TODO
-  return null;
+  const { data, error } = await upstash.get('aboss:hash');
+
+  if (error) {
+    throw new Error(error);
+  }
+
+  return data;
 }
 
 /** @type {(hash: string) => Promise<void>} */
 async function storeHash(hash) {
-  // TODO
-  return;
+  const { error } = await upstash.set('aboss:hash', hash);
+
+  if (error) {
+    throw new Error(error);
+  }
 }
 
 /** @type {() => Promise<Context>} */
@@ -64,7 +79,7 @@ async function getCurrentContext() {
   return {
     changed,
     currentHash: changed ? showsHash : previousHash,
-  }
+  };
 }
 
 // MAIN FUNCTION
@@ -73,11 +88,11 @@ async function getCurrentContext() {
 async function checkForNewShows() {
   const { changed, currentHash } = await getCurrentContext();
 
-  if (changed)  {
-    await Promise.all([
-      storeHash(currentHash),
-      ...subscribers.map((notify) => notify()),
-    ]);
+  if (changed) {
+    console.log('Change detected, notifying subscribers...');
+    await Promise.all([storeHash(currentHash), ...subscribers.map((notify) => notify())]);
+  } else {
+    console.log('No change detected');
   }
 }
 
