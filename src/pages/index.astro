@@ -1,24 +1,11 @@
 ---
 import { format as formatDate } from 'date-fns';
-import { FaFacebook, FaInstagram } from 'react-icons/fa';
 import { renderToString } from 'react-dom/server';
 
 import Layout from '../components/layout-base.astro';
 import Schema from '../components/schema.astro';
 import { abossClient } from '../lib/aboss';
-
-const socials = [
-  {
-    name: 'Facebook',
-    href: 'https://www.facebook.com/thisisloupe',
-    Icon: FaFacebook,
-  },
-  {
-    name: 'Instagram',
-    href: 'https://www.instagram.com/thisisloupe/',
-    Icon: FaInstagram,
-  },
-]
+import { socials } from '../lib/socials';
 
 const shows = await abossClient.publicEvents({ from: new Date() })
   .then((shows) => (

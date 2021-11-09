@@ -2,6 +2,7 @@
 import { MusicGroup } from 'schema-dts';
 
 import { abossClient } from '../lib/aboss';
+import { socials } from '../lib/socials';
 
 const shows = await abossClient.publicEvents();
 
@@ -11,10 +12,7 @@ const schema: MusicGroup = {
   email: 'info@thisisloupe.com',
   logo: 'https://res.cloudinary.com/wannessalome/image/upload/f_auto/v1636058831/loupe/logo.jpg',
   image: 'https://res.cloudinary.com/wannessalome/image/upload/f_auto/v1636058831/loupe/logo.jpg',
-  sameAs: [
-    'https://www.facebook.com/thisisloupe',
-    'https://www.instagram.com/thisisloupe/',
-  ],
+  sameAs: socials.map(({ href }) => href),
   event: shows.map(({ end, location, start, title, ticketLink }) => ({
     "@type": 'MusicEvent',
     name: title,
