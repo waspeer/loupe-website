@@ -9,8 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('gh-actions/pnpm-lock.yaml') }}
@@ -34,4 +33,4 @@ jobs:
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
           NETLIFY_HOOK: ${{ secrets.NETLIFY_HOOK }}
-        run: cd gh-actions && pnpm i && pnpm check
+        run: cd gh-actions && pnpm check
