@@ -2,12 +2,13 @@
   "name": "loupe-website",
   "version": "1.0.0",
   "description": "Website for the Dutch band Loupe",
+  "keywords": ["Astro", "Github Actions", "Schema", "Structured Data", "Netlify"],
   "scripts": {
     "build": "astro build",
     "dev": "astro dev"
   },
   "author": "Wannes Salomé",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "engines": {
     "node": ">=16"
   },
