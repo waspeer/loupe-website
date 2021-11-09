@@ -11,17 +11,20 @@ jobs:
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.20.3
+          run_install: |
+            - cwd: gh-actions
       - uses: actions/setup-node@v2
         with:
           node-version: 16
           cache: pnpm
-      - run: pnpm install
-      - uses: actions/github-script@v5
+      - name: Run script
         env:
           ABOSS_URL: ${{ secrets.ABOSS_URL }}
           ABOSS_TOKEN: ${{ secrets.ABOSS_TOKEN }}
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
           NETLIFY_HOOK: ${{ secrets.NETLIFY_HOOK }}
+        run: pnpm check
+      - uses: actions/github-script@v5
         with:
-          script: require('./check-for-new-shows.js');
+          script: require('./gh-actions/check-for-new-shows.js');
