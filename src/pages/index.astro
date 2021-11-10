@@ -22,12 +22,6 @@ const shows = await abossClient.publicEvents({ from: new Date() })
   <main>
     <header>
       <h1>
-        <img 
-          src="https://res.cloudinary.com/wannessalome/image/upload/f_auto/v1636058831/loupe/logo.jpg" 
-          width="776" 
-          height="590"
-          alt="Loupe"
-        />
         <span class="visually-hidden">Loupe</span>
       </h1>
     </header>
@@ -91,9 +85,11 @@ const shows = await abossClient.publicEvents({ from: new Date() })
   }
 
   header {
-    img {
-      width: 100%;
-      height: auto;
+    h1 {
+      aspect-ratio: 1.31;
+      background: url('/sky.jpg') no-repeat;
+      background-size: cover;
+      mask: url('/logo.svg') center / contain no-repeat;
     }
   }
 
