@@ -85,11 +85,29 @@ const shows = await abossClient.publicEvents({ from: new Date() })
   }
 
   header {
+    position: relative;
+    padding-top: 76.34%;
+
     h1 {
-      aspect-ratio: 1.31;
+      position: absolute;
+      inset: 0;
+    }
+
+    @supports(aspect-ratio: 1.31) {
+      padding-top: 0;
+
+      h1 {
+        position: static;
+        aspect-ratio: 1.31;
+      }
+    }
+
+    h1 {
       background: url('/sky.jpg') no-repeat;
       background-size: cover;
-      mask: url('/logo.svg') center / contain no-repeat;
+      mask: url('/logo.svg');
+      mask-repeat: no-repeat;
+      mask-size: contain;
     }
   }
 
