@@ -21,9 +21,13 @@ const shows = await abossClient.publicEvents({ from: new Date() })
 <Layout>
   <main>
     <header>
-      <h1>
-        <span class="visually-hidden">Loupe</span>
-      </h1>
+      <video 
+        src="https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_blur:100,f_auto,h_300,w_400,x_0,y_0/v1636717695/loupe/video.mp4" 
+        muted 
+        autoplay 
+        loop 
+      />
+      <h1 class="visually-hidden">Loupe</h1>
     </header>
 
     <nav class="socials" aria-label="Socials">
@@ -87,28 +91,31 @@ const shows = await abossClient.publicEvents({ from: new Date() })
   header {
     position: relative;
     padding-top: 76.34%;
+    mask: url('/logo.svg');
+    mask-repeat: no-repeat;
+    mask-size: contain;
 
-    h1 {
+    video {
       position: absolute;
+      width: 100%;
+      height: 100%;
       inset: 0;
+      object-fit: cover;
+      transform: scale(1);
     }
 
     @supports(aspect-ratio: 1.31) {
       padding-top: 0;
-
-      h1 {
-        position: static;
-        aspect-ratio: 1.31;
-      }
+      aspect-ratio: 1.31;
     }
 
-    h1 {
-      background: url('/sky.jpg') no-repeat;
-      background-size: cover;
-      mask: url('/logo.svg');
-      mask-repeat: no-repeat;
-      mask-size: contain;
-    }
+    // h1 {
+    //   background: url('/sky.jpg') no-repeat;
+    //   background-size: cover;
+    //   mask: url('/logo.svg');
+    //   mask-repeat: no-repeat;
+    //   mask-size: contain;
+    // }
   }
 
   .socials {
