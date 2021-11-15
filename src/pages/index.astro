@@ -14,6 +14,8 @@ const shows = await abossClient.publicEvents({ from: new Date() })
     shows.filter(({ start }) => new Date(start).getTime() > Date.now())
   ));
 
+const videoUrl = 'https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_blur:100,f_auto,h_300,w_400,x_0,y_0/v1636717695/loupe/video.mp4';
+
 ---
 
 <Schema />
@@ -22,10 +24,11 @@ const shows = await abossClient.publicEvents({ from: new Date() })
   <main>
     <header>
       <video 
-        src="https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_blur:100,f_auto,h_300,w_400,x_0,y_0/v1636717695/loupe/video.mp4" 
+        src={videoUrl} 
         muted 
         autoplay 
-        loop 
+        loop
+        playsinline
       />
       <h1 class="visually-hidden">Loupe</h1>
     </header>
