@@ -18,6 +18,7 @@ const ABOSS_TOKEN = process.env.ABOSS_TOKEN;
 const NETLIFY_HOOK = process.env.NETLIFY_HOOK;
 
 const TWO_DAYS = 60 * 60 * 24 * 2;
+const REDIS_KEY = 'loupe:aboss-hash'
 
 // TYPE DEFINITIONS
 // ----------------
@@ -53,7 +54,7 @@ async function fetchShows() {
 
 /** @type {() => Promise<string | null>} */
 async function getPreviousHash() {
-  const { data, error } = await upstash.get('aboss:hash');
+  const { data, error } = await upstash.get(REDIS_KEY);
 
   if (error) {
     throw new Error(error);
@@ -64,7 +65,7 @@ async function getPreviousHash() {
 
 /** @type {(hash: string) => Promise<void>} */
 async function storeHash(hash) {
-  const { error } = await upstash.setex('aboss:hash', TWO_DAYS, hash);
+  const { error } = await upstash.setex(REDIS_KEY, TWO_DAYS, hash);
 
   if (error) {
     throw new Error(error);
