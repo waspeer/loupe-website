@@ -15,7 +15,9 @@ const hashObject = require('object-hash');
 
 const ABOSS_URL = process.env.ABOSS_URL;
 const ABOSS_TOKEN = process.env.ABOSS_TOKEN;
-const NETLIFY_HOOK = process.env.NETLIFY_HOOK; // https://api.netlify.com/build_hooks/61893ca60768133362b0dd15
+const NETLIFY_HOOK = process.env.NETLIFY_HOOK;
+
+const TWO_DAYS = 60 * 60 * 24 * 2;
 
 // TYPE DEFINITIONS
 // ----------------
@@ -62,7 +64,7 @@ async function getPreviousHash() {
 
 /** @type {(hash: string) => Promise<void>} */
 async function storeHash(hash) {
-  const { error } = await upstash.set('aboss:hash', hash);
+  const { error } = await upstash.setex('aboss:hash', TWO_DAYS, hash);
 
   if (error) {
     throw new Error(error);
