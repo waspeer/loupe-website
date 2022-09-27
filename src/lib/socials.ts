@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaSpotify } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaSpotify } from 'react-icons/fa/index.js';
 
 import type { IconType } from 'react-icons';
 
