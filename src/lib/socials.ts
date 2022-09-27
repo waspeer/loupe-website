@@ -1,5 +1,6 @@
-import type { IconType } from 'react-icons';
 import { FaFacebook, FaInstagram, FaSpotify } from 'react-icons/fa';
+
+import type { IconType } from 'react-icons';
 
 interface Social {
   name: string;

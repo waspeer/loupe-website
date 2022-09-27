@@ -1,5 +1,5 @@
 ---
-import { MusicGroup } from 'schema-dts';
+import type { MusicGroup } from 'schema-dts';
 
 import { abossClient } from '../lib/aboss';
 import { socials } from '../lib/socials';
@@ -7,34 +7,32 @@ import { socials } from '../lib/socials';
 const shows = await abossClient.publicEvents();
 
 const schema: MusicGroup = {
-  "@type": 'MusicGroup',  
+  '@type': 'MusicGroup',
   name: 'Loupe',
   email: 'info@thisisloupe.com',
   logo: 'https://res.cloudinary.com/wannessalome/image/upload/f_auto/v1636058831/loupe/logo.jpg',
   image: 'https://res.cloudinary.com/wannessalome/image/upload/f_auto/v1636058831/loupe/logo.jpg',
   sameAs: socials.map(({ href }) => href),
   event: shows.map(({ end, location, start, title, ticketLink }) => ({
-    "@type": 'MusicEvent',
+    '@type': 'MusicEvent',
     name: title,
     startDate: start,
     endDate: end,
-    'location': {
-      "@type": 'MusicVenue',
+    location: {
+      '@type': 'MusicVenue',
       name: location.title,
       address: `${location.city}, ${location.country}`,
     },
-    ...(ticketLink ? {
-      offers: {
-        "@type": 'Offer',
-        url: ticketLink
-      },
-    } : {})
-  }))
+    ...(ticketLink
+      ? {
+          offers: {
+            '@type': 'Offer',
+            url: ticketLink,
+          },
+        }
+      : {}),
+  })),
 };
 ---
 
-{`
-  <script type="application/ld+json">
-    ${JSON.stringify(schema)}
-  </script>
-`}
+<script type="application/ld+json" set:html={JSON.stringify(schema)}></script>

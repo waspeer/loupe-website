@@ -7,15 +7,14 @@ import Schema from '../components/schema.astro';
 import { abossClient } from '../lib/aboss';
 import { socials } from '../lib/socials';
 
-const shows = await abossClient.publicEvents({ from: new Date() })
-  .then((shows) => (
-    // Temporarily filter out old shows manually until I figure out how to use
-    // from search parameter
-    shows.filter(({ start }) => new Date(start).getTime() > Date.now())
-  ));
+const shows = await abossClient.publicEvents({ from: new Date() }).then((shows) =>
+  // Temporarily filter out old shows manually until I figure out how to use
+  // from search parameter
+  shows.filter(({ start }) => new Date(start).getTime() > Date.now()),
+);
 
-const videoUrl = 'https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_blur:100,f_auto,h_300,w_400,x_0,y_0/v1636717695/loupe/video.mp4';
-
+const videoUrl =
+  'https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_blur:100,f_auto,h_300,w_400,x_0,y_0/v1636717695/loupe/video.mp4';
 ---
 
 <Schema />
@@ -23,48 +22,44 @@ const videoUrl = 'https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_
 <Layout>
   <main>
     <header>
-      <video 
-        src={videoUrl} 
-        muted 
-        autoplay 
-        loop
-        playsinline
-      />
+      <video src={videoUrl} muted autoplay loop playsinline></video>
       <h1 class="visually-hidden">Loupe</h1>
     </header>
 
     <nav class="socials" aria-label="Socials">
       <ul>
-        {socials.map(({ name, href, Icon }) => (
-          <li>
-            <a href={href} title={name}>
-              {renderToString(Icon({ 'aria-hidden': 'true' } as any))}
-              <span class="visually-hidden">{name}</span>
-            </a>
-          </li>
-        ))}
+        {
+          socials.map(({ name, href, Icon }) => (
+            <li>
+              <a href={href} title={name}>
+                <Fragment set:html={renderToString(Icon({ 'aria-hidden': 'true' } as any))} />
+                <span class="visually-hidden">{name}</span>
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
 
     <section class="shows">
-      {shows.map(({ location, occupancyRate, start, ticketLink, title }) => (
-        <article>
-          <time datetime={start}>{formatDate(new Date(start), 'dd MMM')}</time>
+      {
+        shows.map(({ location, occupancyRate, start, ticketLink, title }) => (
+          <article>
+            <time datetime={start}>{formatDate(new Date(start), 'dd MMM')}</time>
 
-          <div>
-            <h2>{title}</h2>
-            <div class="venue">{location.city}, {location.country}</div>
+            <div>
+              <h2>{title}</h2>
+              <div class="venue">
+                {location.city}, {location.country}
+              </div>
 
-            {occupancyRate === 100 && (
-              <div class="sold-out">Sold Out</div>
-            )}
+              {occupancyRate === 100 && <div class="sold-out">Sold Out</div>}
 
-            {ticketLink.length > 0 && (
-              <a href={ticketLink}>Get Tickets</a>
-            )}
-          </div>
-        </article>
-      ))}
+              {ticketLink.length > 0 && <a href={ticketLink}>Get Tickets</a>}
+            </div>
+          </article>
+        ))
+      }
     </section>
 
     <footer>
@@ -107,7 +102,7 @@ const videoUrl = 'https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_
       transform: scale(1);
     }
 
-    @supports(aspect-ratio: 1.31) {
+    @supports (aspect-ratio: 1.31) {
       padding-top: 0;
       aspect-ratio: 1.31;
     }
@@ -122,7 +117,7 @@ const videoUrl = 'https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_
       font-size: 2rem;
       list-style: none;
     }
-  
+
     a {
       display: grid;
       border-radius: 50%;
@@ -200,5 +195,4 @@ const videoUrl = 'https://res.cloudinary.com/wannessalome/video/upload/c_crop,e_
       border-radius: 0.125rem;
     }
   }
-
 </style>
