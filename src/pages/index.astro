@@ -1,6 +1,6 @@
 ---
+import { Icon } from 'astro-icon';
 import { format as formatDate } from 'date-fns';
-import { renderToString } from 'react-dom/server';
 
 import Layout from '../components/layout-base.astro';
 import Schema from '../components/schema.astro';
@@ -29,10 +29,10 @@ const videoUrl =
     <nav class="socials" aria-label="Socials">
       <ul>
         {
-          socials.map(({ name, href, Icon }) => (
+          socials.map(({ name, href, iconName }) => (
             <li>
               <a href={href} title={name}>
-                <Fragment set:html={renderToString(Icon({ 'aria-hidden': 'true' } as any))} />
+                <Icon name={iconName} aria-hidden />
                 <span class="visually-hidden">{name}</span>
               </a>
             </li>
@@ -122,6 +122,11 @@ const videoUrl =
       display: grid;
       border-radius: 50%;
       place-content: center;
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
     }
   }
 

@@ -1,8 +1,15 @@
-//@ts-check
+import netlify from '@astrojs/netlify/functions';
+import { defineConfig } from 'astro/config';
 
-/** @type {import('astro').AstroUserConfig} */
-const config = {
-  site: "https://thisisloupe.com",
-};
+const config = defineConfig({
+  site: 'https://thisisloupe.com',
+  output: 'server',
+  adapter: netlify(),
+  vite: {
+    ssr: {
+      external: ['svgo'],
+    },
+  },
+});
 
 export default config;
