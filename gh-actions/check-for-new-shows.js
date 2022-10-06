@@ -84,7 +84,6 @@ async function storeHash(hash) {
 async function getCurrentContext() {
   const previousHash = await getPreviousHash();
   const shows = await fetchShows();
-  console.log('shows', shows);
   const showsHash = hashObject(shows);
   const changed = showsHash !== previousHash;
 
