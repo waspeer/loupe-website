@@ -1,5 +1,6 @@
 import { format as formatDate } from 'date-fns';
-import fetch from 'node-fetch';
+
+import { env } from '../env';
 
 const API_BASE_URL = 'https://data.a-boss.net/v1/';
 
@@ -122,7 +123,7 @@ function createPublicEventsFetcher({ collectionUrl, token }: FetcherConfig) {
 // ----
 
 export const abossClient = createClient({
-  agencyId: import.meta.env.SNOWPACK_PUBLIC_ABOSS_AGENCY_ID,
-  artistId: import.meta.env.SNOWPACK_PUBLIC_ABOSS_ARTIST_ID,
-  token: import.meta.env.SNOWPACK_PUBLIC_ABOSS_TOKEN,
+  agencyId: env.ABOSS_AGENCY_ID,
+  artistId: env.ABOSS_ARTIST_ID,
+  token: env.ABOSS_TOKEN,
 });
