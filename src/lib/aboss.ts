@@ -80,6 +80,7 @@ interface AbossEvent {
   website: string; // Event Website URL
   occupancyRate: number; // Occupancy Rate in percentage
   ticketLink: string; // Ticket URL
+  soldOut: boolean; // true or false
   location: {
     title: string; // Location Title
     country: string; // Location Country

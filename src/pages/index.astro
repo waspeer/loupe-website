@@ -43,7 +43,7 @@ const videoUrl =
 
     <section class="shows">
       {
-        shows.map(({ location, occupancyRate, start, ticketLink, title }) => (
+        shows.map(({ location, soldOut, start, ticketLink, title }) => (
           <article>
             <time datetime={start}>{formatDate(new Date(start), 'dd MMM')}</time>
 
@@ -53,9 +53,9 @@ const videoUrl =
                 {location.city}, {location.country}
               </div>
 
-              {occupancyRate === 100 && <div class="sold-out">Sold Out</div>}
+              {soldOut && <div class="sold-out">Sold Out</div>}
 
-              {ticketLink.length > 0 && <a href={ticketLink}>Get Tickets</a>}
+              {!soldOut && ticketLink.length > 0 && <a href={ticketLink}>Get Tickets</a>}
             </div>
           </article>
         ))
@@ -160,6 +160,7 @@ const videoUrl =
       }
 
       & h2 {
+        margin: 0;
         font-size: 1rem;
       }
 
