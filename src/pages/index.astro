@@ -1,16 +1,19 @@
 ---
 import { Icon } from 'astro-icon';
-import { format as formatDate } from 'date-fns';
+import { format as formatDate, isSameDay } from 'date-fns';
 
 import Layout from '../components/layout.astro';
 import Schema from '../components/schema.astro';
 import { abossClient } from '../lib/aboss';
 import { socials } from '../lib/socials';
 
+const today = new Date();
 const shows = await abossClient.publicEvents({ from: new Date() }).then((shows) =>
   // Temporarily filter out old shows manually until I figure out how to use
   // from search parameter
-  shows.filter(({ start }) => new Date(start).getTime() > Date.now()),
+  shows.filter(
+    ({ start }) => new Date(start).getTime() > Date.now() || isSameDay(new Date(start), today),
+  ),
 );
 
 const videoUrl =
